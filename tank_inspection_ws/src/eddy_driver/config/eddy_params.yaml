@@ -1,0 +1,13 @@
+eddy_driver_node:
+  ros__parameters:
+    device: "/dev/ttyACM0"
+    baud: 4000000
+    publish_rate: 10.0
+    settings_query_rate: 1.0
+    sensor_id: "UNASSIGNED"
+    calibration_id: "UNASSIGNED"
+    frame_id: "eddy_probe_link"
+    # STM32 帧内没有采样率、硬件时间戳或 Q 分量；确认硬件配置后再填写。
+    sampling_rate_hz: 0.0
+    gain_db: -1.0
+    lift_off_mm: -1.0

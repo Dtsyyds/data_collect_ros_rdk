@@ -1,0 +1,54 @@
+rough_extrinsics:
+  calibration_id: mid360_d405_rough_20260721_02
+  calibration_stage: rough
+  production_valid: false
+  enabled: true
+
+  transform:
+    parent_frame: livox_frame
+    child_frame: camera_link
+    # Child-frame origin expressed in the parent frame.
+    translation_m:
+      x: 0.055
+      y: -0.008
+      z: -0.068
+    # Fixed-axis ROS roll/pitch/yaw in radians. D405 forward ~= Livox +X;
+    # the reported D405 top direction ~= Livox -Z, hence the 180-degree roll.
+    rotation_rpy_rad:
+      roll: 3.141592653589793
+      pitch: 0.0
+      yaw: 0.0
+    quaternion_xyzw_reference:
+      x: 1.0
+      y: 0.0
+      z: 0.0
+      w: 0.0
+
+  measurement:
+    method: manual_tape_and_mounting_orientation
+    translation_reference: MID-360 origin O to D405 camera_link origin
+    reported_translation_mm: [55.0, 10.0, -68.0]
+    corrected_translation_mm: [55.0, -8.0, -68.0]
+    d405_imager_baseline_mm: 18.0
+    reference_correction: >-
+      The reported Y value used the right lens in the front-view photograph. The D405 camera_link
+      origin is the left imager; with the reported 180-degree roll, the correction is -18 mm along
+      MID-360 Y, changing +10 mm to -8 mm.
+    reported_camera_forward: MID-360 +X
+    reported_camera_top: MID-360 -Z
+    reported_alignment: nearly_vertical
+    translation_uncertainty_mm: null
+    rotation_uncertainty_deg: null
+    evidence:
+      - file: 正视图.png
+        sha256: 2189860563e2adc8a9bf1ede924b0abce5f7106fddd28e75be626a7a35a15144
+      - file: 侧视.png
+        sha256: eec40daa9289f1252b088122a0314526c550e9a963dc8d6d7ef5cc6dd4106620
+      - file: 俯视.png
+        sha256: 57278c97b1f2d404f78fae90de092b4170108b5f87dba3fca7566ea5eba3ae90
+
+  limitations:
+    - This transform is intended only for the baseline data-flow loop and coarse visualization.
+    - The 180-degree roll uses the operator's identification of the left imager in the front-view
+      photograph; verify it once more with the common-plane RViz test.
+    - Do not use this transform as a production metrology or defect-localization calibration.

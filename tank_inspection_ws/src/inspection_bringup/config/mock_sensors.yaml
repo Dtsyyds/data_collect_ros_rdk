@@ -1,0 +1,32 @@
+inspection_mock_sensors:
+  ros__parameters:
+    random_seed: 42
+    depth_width: 848
+    depth_height: 480
+    depth_rate_hz: 15.0
+    lidar_rate_hz: 10.0
+    lidar_point_count: 2400
+    imu_rate_hz: 200.0
+    odometry_rate_hz: 50.0
+    robot_state_rate_hz: 20.0
+    ultrasound_rate_hz: 50.0
+    ultrasound_channel_count: 2
+    ultrasound_sample_count: 2048
+    eddy_current_rate_hz: 25.0
+    eddy_current_channel_count: 2
+    eddy_current_sample_count: 512
+    probe_state_rate_hz: 50.0
+    # Shared with the schematic tank used by the fused Rerun demo.
+    tank_radius_m: 15.0
+    tank_height_m: 18.0
+    tank_start_angle_rad: 0.0
+    start_height_m: 1.0
+    robot_standoff_m: 0.3
+    linear_speed_m_s: 0.5
+    vertical_speed_m_s: 0.1
+    # Empty keeps the deterministic helix fallback. mock_pipeline.launch.py can
+    # override this with an exported MissionPlan trajectory JSON.
+    mission_trajectory_path: ""
+    mission_speed_m_s: 2.0
+    mission_dwell_s: 0.5
+    mission_loop: true

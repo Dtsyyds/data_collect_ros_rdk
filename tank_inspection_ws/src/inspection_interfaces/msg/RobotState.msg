@@ -1,0 +1,9 @@
+std_msgs/Header header
+float32 linear_speed_m_s
+float32 angular_speed_rad_s
+float32 battery_voltage
+float32 adsorption_current_a
+float32 slip_ratio
+bool adsorption_valid
+bool scan_enabled
+uint32 state_flags

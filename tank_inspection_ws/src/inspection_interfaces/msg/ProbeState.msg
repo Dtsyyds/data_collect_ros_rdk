@@ -1,0 +1,7 @@
+std_msgs/Header header
+float32 contact_force_n
+float32 lift_off_mm
+float32 temperature_c
+float32 coupling_score
+bool contact_valid
+uint32 quality_flags

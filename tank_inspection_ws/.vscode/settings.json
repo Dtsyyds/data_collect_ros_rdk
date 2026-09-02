@@ -1,0 +1,27 @@
+{
+    "ROS2.distro": "jazzy",
+    "python.autoComplete.extraPaths": [
+        "/home/dts/physic_bev/tank_inspection_ws/build/inspection_tools",
+        "/home/dts/physic_bev/tank_inspection_ws/install/inspection_tools/lib/python3.12/site-packages",
+        "/home/dts/physic_bev/tank_inspection_ws/install/inspection_interfaces/lib/python3.12/site-packages",
+        "/home/dts/agv_arm/install/startup/lib/python3.13/site-packages",
+        "/home/dts/agv_arm/install/livox_ros_driver2/lib/python3.12/site-packages",
+        "/home/dts/rokae_ws/install/sr4_interfaces/lib/python3.12/site-packages",
+        "/home/dts/fastlio_ws/install/fast_lio/lib/python3.12/site-packages",
+        "/home/dts/fastlio_ws/install/livox_ros_driver2/lib/python3.12/site-packages",
+        "/home/dts/ws_livox/install/livox_ros_driver2/lib/python3.12/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/dts/physic_bev/tank_inspection_ws/build/inspection_tools",
+        "/home/dts/physic_bev/tank_inspection_ws/install/inspection_tools/lib/python3.12/site-packages",
+        "/home/dts/physic_bev/tank_inspection_ws/install/inspection_interfaces/lib/python3.12/site-packages",
+        "/home/dts/agv_arm/install/startup/lib/python3.13/site-packages",
+        "/home/dts/agv_arm/install/livox_ros_driver2/lib/python3.12/site-packages",
+        "/home/dts/rokae_ws/install/sr4_interfaces/lib/python3.12/site-packages",
+        "/home/dts/fastlio_ws/install/fast_lio/lib/python3.12/site-packages",
+        "/home/dts/fastlio_ws/install/livox_ros_driver2/lib/python3.12/site-packages",
+        "/home/dts/ws_livox/install/livox_ros_driver2/lib/python3.12/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ]
+}

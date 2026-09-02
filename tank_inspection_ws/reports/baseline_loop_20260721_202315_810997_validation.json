@@ -1,0 +1,132 @@
+{
+  "bag_directory": "/home/dts/physic_bev/tank_inspection_ws/bags/baseline_loop_20260721_202315_810997",
+  "diagnostics": {
+    "configured_max_counts": {
+      "camera": 100,
+      "eddy_current": 200,
+      "imu": 1500,
+      "lidar": 40,
+      "odometry": 500,
+      "probe_state": 500,
+      "robot_state": 500,
+      "ultrasound": 200
+    },
+    "last_values": {
+      "acceleration_scale": "9.806650",
+      "input_acceleration_unit": "g",
+      "input_topic": "/livox/imu_raw",
+      "non_monotonic_count": "0",
+      "output_acceleration_unit": "m/s^2",
+      "output_topic": "/livox/imu",
+      "published_count": "11945",
+      "received_count": "11945",
+      "rejected_count": "0"
+    },
+    "maximum_cache_lengths": {}
+  },
+  "errors": [],
+  "fusion": {
+    "camera_time_error": {
+      "max_abs_ns": null,
+      "mean_abs_ns": null,
+      "sample_count": 0
+    },
+    "fully_valid_count": 0,
+    "fully_valid_rate": 0.0,
+    "invalid_reason_counts": {},
+    "lidar_time_error": {
+      "max_abs_ns": null,
+      "mean_abs_ns": null,
+      "sample_count": 0
+    },
+    "message_count": 0,
+    "modality_valid_count": {},
+    "modality_valid_rate": {
+      "camera": 0.0,
+      "imu": 0.0,
+      "lidar": 0.0,
+      "pose": 0.0
+    }
+  },
+  "metadata_message_count": 27577,
+  "relative_files": [
+    "baseline_loop_20260721_202315_810997_0.mcap"
+  ],
+  "storage_identifier": "mcap",
+  "topics": {
+    "/camera/camera/color/camera_info": {
+      "average_rate_hz": 15.018832499440638,
+      "end_stamp_ns": 1784636655903139893,
+      "message_count": 881,
+      "non_monotonic_count": 0,
+      "start_stamp_ns": 1784636597310036865,
+      "type": "sensor_msgs/msg/CameraInfo"
+    },
+    "/camera/camera/color/image_raw": {
+      "average_rate_hz": 15.018832499440638,
+      "end_stamp_ns": 1784636655903139893,
+      "message_count": 881,
+      "non_monotonic_count": 0,
+      "start_stamp_ns": 1784636597310036865,
+      "type": "sensor_msgs/msg/Image"
+    },
+    "/camera/camera/depth/camera_info": {
+      "average_rate_hz": 15.015653772797794,
+      "end_stamp_ns": 1784636655900371826,
+      "message_count": 892,
+      "non_monotonic_count": 0,
+      "start_stamp_ns": 1784636596562296143,
+      "type": "sensor_msgs/msg/CameraInfo"
+    },
+    "/camera/camera/depth/image_rect_raw": {
+      "average_rate_hz": 15.015653772797794,
+      "end_stamp_ns": 1784636655900371826,
+      "message_count": 892,
+      "non_monotonic_count": 0,
+      "start_stamp_ns": 1784636596562296143,
+      "type": "sensor_msgs/msg/Image"
+    },
+    "/diagnostics": {
+      "average_rate_hz": 1.9999998892542434,
+      "end_stamp_ns": 1784636655965695779,
+      "message_count": 119,
+      "non_monotonic_count": 0,
+      "start_stamp_ns": 1784636596965692512,
+      "type": "diagnostic_msgs/msg/DiagnosticArray"
+    },
+    "/livox/imu": {
+      "average_rate_hz": 199.06975147734053,
+      "end_stamp_ns": 1784636655974034010,
+      "message_count": 11947,
+      "non_monotonic_count": 0,
+      "start_stamp_ns": 1784636595964917048,
+      "type": "sensor_msgs/msg/Imu"
+    },
+    "/livox/imu_raw": {
+      "average_rate_hz": 200.00271418360313,
+      "end_stamp_ns": 1784636655974034010,
+      "message_count": 11393,
+      "non_monotonic_count": 0,
+      "start_stamp_ns": 1784636599014806999,
+      "type": "sensor_msgs/msg/Imu"
+    },
+    "/livox/lidar": {
+      "average_rate_hz": 9.982365747394697,
+      "end_stamp_ns": 1784636655865592032,
+      "message_count": 569,
+      "non_monotonic_count": 0,
+      "start_stamp_ns": 1784636598965252536,
+      "type": "sensor_msgs/msg/PointCloud2"
+    },
+    "/tf_static": {
+      "average_rate_hz": 27351.175416763537,
+      "end_stamp_ns": 1784636596546873257,
+      "message_count": 3,
+      "non_monotonic_count": 0,
+      "start_stamp_ns": 1784636596546800134,
+      "type": "tf2_msgs/msg/TFMessage"
+    }
+  },
+  "valid": true,
+  "warnings": []
+}

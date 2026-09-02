@@ -1,0 +1,29 @@
+# ROS 2 and local build artifacts
+tank_inspection_ws/build/
+tank_inspection_ws/install/
+tank_inspection_ws/log/
+tank_inspection_ws/.pytest_cache/
+tank_inspection_ws/**/__pycache__/
+
+# Local Python environment and generated viewer output
+tank_inspection_ws/.venv_rerun/
+tank_inspection_ws/output/
+
+# Recorded sensor data and large local archives
+tank_inspection_ws/bags/
+tank_inspection_ws/src.zip
+
+# Local/editor databases and transient files
+.git-data/
+.vscode/*.db
+.vscode/*.db-*
+.vscode/*.lock
+tank_inspection_ws/.vscode/*.db
+tank_inspection_ws/.vscode/*.db-*
+tank_inspection_ws/.vscode/*.lock
+*.py[cod]
+*.swp
+*.swo
+
+# Local logs and generated report outputs
+tank_inspection_ws/reports/ros_logs/

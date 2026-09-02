@@ -1,0 +1,324 @@
+{
+  "bag_directory": "/home/dts/physic_bev/tank_inspection_ws/bags/eddy_sync_loop_20260721_211217_658866",
+  "diagnostics": {
+    "configured_max_counts": {
+      "camera": 100,
+      "eddy_current": 200,
+      "imu": 1500,
+      "lidar": 40,
+      "odometry": 500,
+      "probe_state": 500,
+      "robot_state": 500,
+      "ultrasound": 200
+    },
+    "last_by_status": {
+      "camera: Temperatures": {
+        "hardware_id": "260322276866",
+        "level": 0,
+        "message": "OK",
+        "values": {
+          "Asic Temperature": "42"
+        }
+      },
+      "camera: color": {
+        "hardware_id": "260322276866",
+        "level": 0,
+        "message": "Desired frequency met",
+        "values": {
+          "Actual frequency (Hz)": "14.999626",
+          "Duration of window (s)": "10.000249",
+          "Events in window": "150",
+          "Events since startup": "420",
+          "Maximum acceptable frequency (Hz)": "16.500000",
+          "Minimum acceptable frequency (Hz)": "13.500000",
+          "Target frequency (Hz)": "15.000000"
+        }
+      },
+      "camera: depth": {
+        "hardware_id": "260322276866",
+        "level": 0,
+        "message": "Desired frequency met",
+        "values": {
+          "Actual frequency (Hz)": "14.999599",
+          "Duration of window (s)": "10.000267",
+          "Events in window": "150",
+          "Events since startup": "429",
+          "Maximum acceptable frequency (Hz)": "16.500000",
+          "Minimum acceptable frequency (Hz)": "13.500000",
+          "Target frequency (Hz)": "15.000000"
+        }
+      },
+      "eddy_driver/acquisition": {
+        "hardware_id": "UNASSIGNED",
+        "level": 1,
+        "message": "host receive timestamps; Q component and calibration quality unavailable",
+        "values": {
+          "current_amplitude": "450",
+          "current_frequency_hz": "450000",
+          "device": "/dev/ttyACM0",
+          "dropped_frame_count": "0",
+          "parsed_frame_count": "14504",
+          "queue_capacity": "512",
+          "queue_length": "49",
+          "sampling_rate_hz": "0.000000",
+          "signal_layout": "channel_major_i_only; signal_q=NaN",
+          "timestamp_source": "host_receive_completion"
+        }
+      },
+      "inspection_livox_adapter/imu_units": {
+        "hardware_id": "MID-360",
+        "level": 0,
+        "message": "converting Livox acceleration from g to m/s^2",
+        "values": {
+          "acceleration_scale": "9.806650",
+          "input_acceleration_unit": "g",
+          "input_topic": "/livox/imu_raw",
+          "non_monotonic_count": "0",
+          "output_acceleration_unit": "m/s^2",
+          "output_topic": "/livox/imu",
+          "published_count": "5649",
+          "received_count": "5649",
+          "rejected_count": "0"
+        }
+      },
+      "inspection_sync/bounded_caches": {
+        "hardware_id": "software",
+        "level": 0,
+        "message": "bounded caches active",
+        "values": {
+          "anchor_decimation": "10",
+          "anchors_decimated": "13054",
+          "anchors_enqueued": "1451",
+          "anchors_seen": "14505",
+          "camera.late": "0",
+          "camera.length": "31",
+          "camera.oldest_age_s": "2.126",
+          "camera.out_of_order": "0",
+          "camera.received": "425",
+          "camera.rejected": "0",
+          "eddy_current.late": "0",
+          "eddy_current.length": "200",
+          "eddy_current.oldest_age_s": "0.413",
+          "eddy_current.out_of_order": "0",
+          "eddy_current.received": "14505",
+          "eddy_current.rejected": "0",
+          "fusion_success": "0",
+          "imu.late": "0",
+          "imu.length": "1000",
+          "imu.oldest_age_s": "4.998",
+          "imu.out_of_order": "0",
+          "imu.received": "5523",
+          "imu.rejected": "0",
+          "late_messages_total": "0",
+          "lidar.late": "0",
+          "lidar.length": "21",
+          "lidar.oldest_age_s": "2.125",
+          "lidar.out_of_order": "0",
+          "lidar.received": "276",
+          "lidar.rejected": "0",
+          "odometry.late": "0",
+          "odometry.length": "0",
+          "odometry.oldest_age_s": "0.000",
+          "odometry.out_of_order": "0",
+          "odometry.received": "0",
+          "odometry.rejected": "0",
+          "out_of_order_total": "0",
+          "pending_dropped": "0",
+          "pending_fusion": "10",
+          "probe_state.late": "0",
+          "probe_state.length": "0",
+          "probe_state.oldest_age_s": "0.000",
+          "probe_state.out_of_order": "0",
+          "probe_state.received": "0",
+          "probe_state.rejected": "0",
+          "robot_state.late": "0",
+          "robot_state.length": "0",
+          "robot_state.oldest_age_s": "0.000",
+          "robot_state.out_of_order": "0",
+          "robot_state.received": "0",
+          "robot_state.rejected": "0",
+          "sync_failure": "1441",
+          "ultrasound.late": "0",
+          "ultrasound.length": "0",
+          "ultrasound.oldest_age_s": "0.000",
+          "ultrasound.out_of_order": "0",
+          "ultrasound.received": "0",
+          "ultrasound.rejected": "0"
+        }
+      }
+    },
+    "last_values": {
+      "Actual frequency (Hz)": "14.999599",
+      "Asic Temperature": "42",
+      "Duration of window (s)": "10.000267",
+      "Events in window": "150",
+      "Events since startup": "429",
+      "Maximum acceptable frequency (Hz)": "16.500000",
+      "Minimum acceptable frequency (Hz)": "13.500000",
+      "Target frequency (Hz)": "15.000000"
+    },
+    "maximum_cache_lengths": {
+      "camera": 31,
+      "eddy_current": 200,
+      "imu": 1001,
+      "lidar": 21,
+      "odometry": 0,
+      "probe_state": 0,
+      "robot_state": 0,
+      "ultrasound": 0
+    }
+  },
+  "errors": [],
+  "fusion": {
+    "camera_time_error": {
+      "max_abs_ns": 36139251,
+      "max_signed_ns": 36139251,
+      "mean_abs_ns": 16667905.928767124,
+      "mean_signed_ns": -38705.60821917808,
+      "median_signed_ns": 137906.0,
+      "min_signed_ns": -33265292,
+      "p95_abs_ns": 31692614,
+      "sample_count": 1460
+    },
+    "fully_valid_count": 0,
+    "fully_valid_rate": 0.0,
+    "invalid_reason_counts": {
+      "camera_missing_or_outside_tolerance;lidar_missing_or_outside_tolerance;imu_window_incomplete;pose_bracket_missing_or_gap_exceeded": 10,
+      "lidar_missing_or_outside_tolerance;imu_window_incomplete;pose_bracket_missing_or_gap_exceeded": 115,
+      "pose_bracket_missing_or_gap_exceeded": 1345
+    },
+    "lidar_time_error": {
+      "max_abs_ns": 42047610,
+      "max_signed_ns": 39231443,
+      "mean_abs_ns": 24280506.219330855,
+      "mean_signed_ns": -1397068.4765799257,
+      "median_signed_ns": -1397885,
+      "min_signed_ns": -42047610,
+      "p95_abs_ns": 41622622,
+      "sample_count": 1345
+    },
+    "message_count": 1470,
+    "modality_valid_count": {
+      "camera": 1460,
+      "imu": 1345,
+      "lidar": 1345
+    },
+    "modality_valid_rate": {
+      "camera": 0.9931972789115646,
+      "imu": 0.9149659863945578,
+      "lidar": 0.9149659863945578,
+      "pose": 0.0
+    },
+    "steady_state_after_first_temporal_valid": {
+      "message_count": 1345,
+      "valid_count": 1345,
+      "valid_rate": 1.0
+    },
+    "temporal_valid_count": 1345,
+    "temporal_valid_rate": 0.9149659863945578
+  },
+  "metadata_message_count": 29645,
+  "relative_files": [
+    "eddy_sync_loop_20260721_211217_658866_0.mcap"
+  ],
+  "storage_identifier": "mcap",
+  "topics": {
+    "/camera/camera/color/camera_info": {
+      "average_rate_hz": 15.019589346909525,
+      "end_stamp_ns": 1784639567726001465,
+      "message_count": 431,
+      "non_monotonic_count": 0,
+      "start_stamp_ns": 1784639539096723389,
+      "type": "sensor_msgs/msg/CameraInfo"
+    },
+    "/camera/camera/color/image_raw": {
+      "average_rate_hz": 15.019589346909525,
+      "end_stamp_ns": 1784639567726001465,
+      "message_count": 431,
+      "non_monotonic_count": 0,
+      "start_stamp_ns": 1784639539096723389,
+      "type": "sensor_msgs/msg/Image"
+    },
+    "/camera/camera/depth/camera_info": {
+      "average_rate_hz": 15.014018613804067,
+      "end_stamp_ns": 1784639567723232910,
+      "message_count": 440,
+      "non_monotonic_count": 0,
+      "start_stamp_ns": 1784639538483892578,
+      "type": "sensor_msgs/msg/CameraInfo"
+    },
+    "/camera/camera/depth/image_rect_raw": {
+      "average_rate_hz": 15.014018613804067,
+      "end_stamp_ns": 1784639567723232910,
+      "message_count": 440,
+      "non_monotonic_count": 0,
+      "start_stamp_ns": 1784639538483892578,
+      "type": "sensor_msgs/msg/Image"
+    },
+    "/derived/inspection/fusion_index": {
+      "average_rate_hz": 49.99705000557765,
+      "end_stamp_ns": 1784639567629382794,
+      "message_count": 1470,
+      "non_monotonic_count": 0,
+      "start_stamp_ns": 1784639538247649275,
+      "type": "inspection_interfaces/msg/FusionIndex"
+    },
+    "/diagnostics": {
+      "average_rate_hz": 4.0654425489340476,
+      "end_stamp_ns": 1784639567120842841,
+      "message_count": 116,
+      "non_monotonic_count": 0,
+      "start_stamp_ns": 1784639538833639513,
+      "type": "diagnostic_msgs/msg/DiagnosticArray"
+    },
+    "/inspection/eddy_current/raw": {
+      "average_rate_hz": 499.9760267634746,
+      "end_stamp_ns": 1784639567737213012,
+      "message_count": 14700,
+      "non_monotonic_count": 0,
+      "start_stamp_ns": 1784639538337803414,
+      "type": "inspection_interfaces/msg/EddyCurrentFrame"
+    },
+    "/livox/imu": {
+      "average_rate_hz": 194.42202104350312,
+      "end_stamp_ns": 1784639567793947883,
+      "message_count": 5827,
+      "non_monotonic_count": 0,
+      "start_stamp_ns": 1784639537828206509,
+      "type": "sensor_msgs/msg/Imu"
+    },
+    "/livox/imu_raw": {
+      "average_rate_hz": 199.99703748852912,
+      "end_stamp_ns": 1784639567793947883,
+      "message_count": 5511,
+      "non_monotonic_count": 0,
+      "start_stamp_ns": 1784639540243539791,
+      "type": "sensor_msgs/msg/Imu"
+    },
+    "/livox/lidar": {
+      "average_rate_hz": 9.51545088581311,
+      "end_stamp_ns": 1784639567627328953,
+      "message_count": 276,
+      "non_monotonic_count": 0,
+      "start_stamp_ns": 1784639538726964346,
+      "type": "sensor_msgs/msg/PointCloud2"
+    },
+    "/tf_static": {
+      "average_rate_hz": 12149.413487063912,
+      "end_stamp_ns": 1784639538436964292,
+      "message_count": 3,
+      "non_monotonic_count": 0,
+      "start_stamp_ns": 1784639538436799675,
+      "type": "tf2_msgs/msg/TFMessage"
+    }
+  },
+  "valid": true,
+  "warnings": [
+    "provisional eddy-current limitation: sensor_id is never assigned",
+    "provisional eddy-current limitation: calibration_id is never assigned",
+    "provisional eddy-current limitation: sampling_rate_hz is never positive",
+    "provisional eddy-current limitation: gain_db is never finite",
+    "provisional eddy-current limitation: lift_off_mm is never finite",
+    "provisional eddy-current limitation: signal_q contains no finite sample"
+  ]
+}

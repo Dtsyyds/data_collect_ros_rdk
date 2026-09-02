@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ -z "${VIRTUAL_ENV:-}" || ! -x "${VIRTUAL_ENV}/bin/python" ]]; then
+  echo "error: activate the Rerun virtual environment before launching inspection_rerun" >&2
+  exit 1
+fi
+if ! "${VIRTUAL_ENV}/bin/python" -c 'import rclpy, rerun' >/dev/null 2>&1; then
+  echo "error: active virtual environment cannot import both rclpy and rerun" >&2
+  exit 1
+fi
+exec "${VIRTUAL_ENV}/bin/python" -m inspection_rerun.rerun_bridge_node "$@"

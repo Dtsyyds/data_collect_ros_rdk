@@ -1,0 +1,79 @@
+/camera/camera/depth/image_rect_raw:
+  history: keep_last
+  depth: 10
+  reliability: reliable
+  durability: volatile
+/camera/camera/depth/camera_info:
+  history: keep_last
+  depth: 10
+  reliability: reliable
+  durability: volatile
+/camera/camera/color/image_raw:
+  history: keep_last
+  depth: 10
+  reliability: reliable
+  durability: volatile
+/camera/camera/color/camera_info:
+  history: keep_last
+  depth: 10
+  reliability: reliable
+  durability: volatile
+/livox/lidar:
+  history: keep_last
+  depth: 20
+  reliability: best_effort
+  durability: volatile
+/livox/imu_raw:
+  history: keep_last
+  depth: 200
+  reliability: best_effort
+  durability: volatile
+/livox/imu:
+  history: keep_last
+  depth: 200
+  reliability: best_effort
+  durability: volatile
+/robot/odometry:
+  history: keep_last
+  depth: 100
+  reliability: best_effort
+  durability: volatile
+/robot/state:
+  history: keep_last
+  depth: 50
+  reliability: best_effort
+  durability: volatile
+/inspection/ultrasound/raw:
+  history: keep_last
+  depth: 100
+  reliability: best_effort
+  durability: volatile
+/inspection/eddy_current/raw:
+  history: keep_last
+  depth: 50
+  reliability: best_effort
+  durability: volatile
+/inspection/probe_state:
+  history: keep_last
+  depth: 100
+  reliability: best_effort
+  durability: volatile
+/tf:
+  history: keep_last
+  depth: 100
+  reliability: reliable
+  durability: volatile
+/tf_static:
+  history: keep_all
+  reliability: reliable
+  durability: transient_local
+/diagnostics:
+  history: keep_last
+  depth: 10
+  reliability: reliable
+  durability: volatile
+/derived/inspection/fusion_index:
+  history: keep_last
+  depth: 100
+  reliability: reliable
+  durability: volatile

@@ -1,0 +1,13 @@
+std_msgs/Header header
+uint64 sequence
+string sensor_id
+string calibration_id
+uint32 channel_count
+uint32 sample_count
+float32 sampling_rate_hz
+float32 excitation_frequency_hz
+float32 gain_db
+float32 lift_off_mm
+float32 quality_score
+float32[] signal_i
+float32[] signal_q

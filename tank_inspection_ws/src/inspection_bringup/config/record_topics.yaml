@@ -1,0 +1,23 @@
+topics:
+  - /camera/camera/depth/image_rect_raw
+  - /camera/camera/depth/camera_info
+  - /camera/camera/color/image_raw
+  - /camera/camera/color/camera_info
+  - /livox/lidar
+  - /livox/imu_raw
+  - /livox/imu
+  - /robot/odometry
+  - /robot/state
+  - /inspection/ultrasound/raw
+  - /inspection/eddy_current/raw
+  - /inspection/probe_state
+  - /tf
+  - /tf_static
+  - /diagnostics
+  - /derived/inspection/fusion_index
+production:
+  max_bag_size: 10737418240
+  max_bag_duration: 900
+debug:
+  max_bag_size: 209715200
+  max_bag_duration: 30

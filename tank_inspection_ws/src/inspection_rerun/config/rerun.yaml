@@ -1,0 +1,55 @@
+rerun_bridge:
+  ros__parameters:
+    output_mode: "spawn"
+    recording_id: "tank_inspection_local"
+    save_path: "output/rerun/inspection.rrd"
+    connect_url: "rerun+http://127.0.0.1:9876/proxy"
+
+    image_topic: "/camera/camera/depth/image_rect_raw"
+    camera_info_topic: "/camera/camera/depth/camera_info"
+    pointcloud_topic: "/livox/lidar"
+    imu_topic: "/livox/imu"
+    imu_raw_topic: "/livox/imu_raw"
+    tf_topic: "/tf"
+    tf_static_topic: "/tf_static"
+    eddy_topic: "/inspection/eddy_current/raw"
+    ultrasound_topic: "/inspection/ultrasound/raw"
+    probe_state_topic: "/inspection/probe_state"
+    robot_state_topic: "/robot/state"
+    fusion_index_topic: "/derived/inspection/fusion_index"
+    diagnostics_topic: "/diagnostics"
+    odometry_topic: "/robot/odometry"
+    path_topic: "/path"
+    pose_topic: "/pose"
+
+    image_max_hz: 2.0
+    pointcloud_max_hz: 1.0
+    imu_max_hz: 20.0
+    # ROS 16UC1 depth images use millimetres in the mock/D405 contract.
+    depth_units_per_meter: 1000.0
+    max_point_count: 100000
+    point_stride: 1
+    point_voxel_size: 0.0
+
+    # Enable these three parameters together to place the mission and actual
+    # FusionIndex route on the same 3D tank and 2D unwrapped wall views.
+    log_tank_scene: false
+    tank_asset_path: ""
+    mission_path: ""
+    fusion_height_field: "v_m"
+    actual_trajectory_min_step_m: 0.01
+    actual_trajectory_max_segments: 20000
+    actual_trajectory_max_step_m: 1.0
+
+    log_image: true
+    log_camera_info: true
+    log_pointcloud: true
+    log_imu: true
+    log_tf: true
+    log_eddy: true
+    log_ultrasound: true
+    log_probe_state: true
+    log_robot_state: true
+    log_fusion_index: true
+    log_diagnostics: true
+    log_navigation: true

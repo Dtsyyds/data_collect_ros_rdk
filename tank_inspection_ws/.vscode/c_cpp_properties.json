@@ -1,0 +1,31 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${workspaceFolder}/.vscode/browse.vc.db",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/dts/physic_bev/tank_inspection_ws/install/inspection_sync/include/**",
+        "/home/dts/physic_bev/tank_inspection_ws/install/inspection_interfaces/include/**",
+        "/home/dts/agv_arm/install/livox_ros_driver2/include/**",
+        "/home/dts/agv_arm/install/agv_sensor_integration/include/**",
+        "/home/dts/agv_arm/install/agv_hardware/include/**",
+        "/home/dts/rokae_ws/install/sr4_interfaces/include/**",
+        "/home/dts/rokae_ws/install/sr4_hardware/include/**",
+        "/home/dts/fastlio_ws/install/fast_lio/include/**",
+        "/home/dts/fastlio_ws/install/livox_ros_driver2/include/**",
+        "/home/dts/ws_livox/install/livox_ros_driver2/include/**",
+        "/opt/ros/jazzy/include/**",
+        "/home/dts/physic_bev/tank_inspection_ws/src/inspection_sync/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ros2",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++17"
+    }
+  ],
+  "version": 4
+}

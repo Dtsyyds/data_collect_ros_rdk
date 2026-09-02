@@ -1,0 +1,30 @@
+# This message contains only temporal associations and derived pose metadata.
+# Raw images, point clouds, and waveform arrays remain on their original topics.
+std_msgs/Header header
+uint64 anchor_sequence
+string anchor_topic
+builtin_interfaces/Time camera_stamp
+builtin_interfaces/Time lidar_stamp
+builtin_interfaces/Time imu_start_stamp
+builtin_interfaces/Time imu_end_stamp
+builtin_interfaces/Time pose_before_stamp
+builtin_interfaces/Time pose_after_stamp
+int64 camera_time_error_ns
+int64 lidar_time_error_ns
+bool camera_valid
+bool lidar_valid
+bool imu_valid
+bool pose_valid
+geometry_msgs/Pose interpolated_pose
+float32 pose_confidence
+string asset_id
+string course_id
+string plate_id
+string weld_id
+bool asset_coordinate_valid
+float64 u_m
+float64 v_m
+float64 s_m
+float64 n_m
+uint32 quality_flags
+string invalid_reason
