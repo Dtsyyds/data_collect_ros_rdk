@@ -9,7 +9,14 @@ find_package(ament_cmake REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(inspection_interfaces REQUIRED)
 find_package(nav_msgs REQUIRED)
-find_package(nlohmann_json REQUIRED)
+# nlohmann_json 可能未随系统安装(仅 header)。系统有则用系统 CMake 包,
+# 否则回退到仓库 vendored 单头(<nlohmann/json.hpp>), 保证无额外系统依赖也能构建。
+find_package(nlohmann_json QUIET)
+if(NOT nlohmann_json_FOUND)
+  add_library(nlohmann_json::nlohmann_json INTERFACE IMPORTED)
+  set_target_properties(nlohmann_json::nlohmann_json PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/third_party")
+endif()
 find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)

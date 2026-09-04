@@ -14,7 +14,8 @@
   <exec_depend>inspection_tools</exec_depend>
   <exec_depend>launch</exec_depend>
   <exec_depend>launch_ros</exec_depend>
-  <exec_depend>livox_ros_driver2</exec_depend>
+  <!-- livox_ros_driver2 为可选硬件驱动(vendor, 需外部 Livox-SDK), 本机暂缺故不列为构建依赖;
+       需要 MID-360 时从 src/livox_ros_driver2 去掉 COLCON_IGNORE 并装好 SDK 再构建。 -->
   <exec_depend>python3-yaml</exec_depend>
   <exec_depend>realsense2_camera</exec_depend>
   <exec_depend>ros2bag</exec_depend>
