@@ -9,6 +9,7 @@ topics:
   - /robot/odometry
   - /robot/state
   - /inspection/ultrasound/raw
+  - /inspection/paut/raw
   - /inspection/eddy_current/raw
   - /inspection/probe_state
   - /tf

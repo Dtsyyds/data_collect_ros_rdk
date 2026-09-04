@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>paut_driver</name>
+  <version>1.0.0</version>
+  <description>相控阵超声(PAUT) UDP 推流采集 ROS2 驱动包。纯原生 POSIX socket 接收并解码帧,
+    发布 inspection_interfaces/msg/PautFrame 到 /inspection/paut/raw, 供 mcap 录制。
+    不自带缺陷检测; 仅 decode + header 元数据, 不做滤波/增益。</description>
+  <maintainer email="cat@todo.todo">cat</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>diagnostic_msgs</depend>
+  <depend>inspection_interfaces</depend>
+  <depend>std_msgs</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

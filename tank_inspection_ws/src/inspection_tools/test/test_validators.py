@@ -4,6 +4,7 @@ from inspection_tools.validate_bag import _uint8_value
 from inspection_tools.validators import (
     validate_eddy_current,
     validate_image,
+    validate_paut_frame,
     validate_pointcloud2,
     validate_ultrasound,
 )
@@ -57,6 +58,20 @@ def test_livox_pointcloud2_timestamp_field_is_supported():
     message = SimpleNamespace(
         fields=fields, point_step=32, row_step=64, height=1, width=2, data=bytes(64))
     assert validate_pointcloud2(message) == []
+
+
+def test_paut_frame_array_length_validation():
+    valid = SimpleNamespace(channel_count=167, sample_count=61, samples=list(range(167 * 61)))
+    assert validate_paut_frame(valid) == []
+
+    zero_dim = SimpleNamespace(channel_count=0, sample_count=61, samples=[])
+    errors = validate_paut_frame(zero_dim)
+    assert any("channel_count and sample_count must be positive" in item for item in errors)
+
+    invalid = SimpleNamespace(
+        channel_count=167, sample_count=61, samples=list(range(100)))
+    errors = validate_paut_frame(invalid)
+    assert any("samples length" in item for item in errors)
 
 
 def test_eddy_current_array_and_metadata_validation():

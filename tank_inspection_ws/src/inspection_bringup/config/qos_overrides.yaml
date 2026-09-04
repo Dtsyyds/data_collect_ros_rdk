@@ -48,6 +48,11 @@
   depth: 100
   reliability: best_effort
   durability: volatile
+/inspection/paut/raw:
+  history: keep_last
+  depth: 100
+  reliability: best_effort
+  durability: volatile
 /inspection/eddy_current/raw:
   history: keep_last
   depth: 50

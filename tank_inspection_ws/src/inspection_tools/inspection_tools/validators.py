@@ -109,3 +109,17 @@ def validate_eddy_current(message):
     if not math.isfinite(message.quality_score) or not 0.0 <= message.quality_score <= 1.0:
         errors.append("EddyCurrentFrame quality_score must be finite and in [0, 1]")
     return errors
+
+
+def validate_paut_frame(message):
+    errors = []
+    channel_count = int(message.channel_count)
+    sample_count = int(message.sample_count)
+    if channel_count <= 0 or sample_count <= 0:
+        errors.append("PautFrame channel_count and sample_count must be positive")
+    expected = channel_count * sample_count
+    if len(message.samples) != expected:
+        errors.append(
+            f"PautFrame samples length {len(message.samples)} != "
+            f"channel_count*sample_count {expected}")
+    return errors

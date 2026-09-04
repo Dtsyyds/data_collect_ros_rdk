@@ -13,6 +13,7 @@ import yaml
 from inspection_tools.validators import (
     validate_eddy_current,
     validate_image,
+    validate_paut_frame,
     validate_pointcloud2,
     validate_ultrasound,
 )
@@ -23,6 +24,7 @@ COLOR_IMAGE_TOPIC = "/camera/camera/color/image_raw"
 LIDAR_TOPIC = "/livox/lidar"
 ULTRASOUND_TOPIC = "/inspection/ultrasound/raw"
 EDDY_CURRENT_TOPIC = "/inspection/eddy_current/raw"
+PAUT_TOPIC = "/inspection/paut/raw"
 FUSION_TOPIC = "/derived/inspection/fusion_index"
 REQUIRED_TOPICS = {
     "/camera/camera/depth/image_rect_raw",
@@ -200,6 +202,8 @@ def validate(
             eddy_acceptance["finite_lift_off"] |= math.isfinite(message.lift_off_mm)
             eddy_acceptance["finite_i"] |= any(math.isfinite(value) for value in message.signal_i)
             eddy_acceptance["finite_q"] |= any(math.isfinite(value) for value in message.signal_q)
+        elif topic == PAUT_TOPIC:
+            structural_errors = validate_paut_frame(message)
         for item in structural_errors:
             errors.append(f"{topic} message {stats['message_count']}: {item}")
 

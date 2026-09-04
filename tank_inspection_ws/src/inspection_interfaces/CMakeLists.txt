@@ -10,6 +10,7 @@ find_package(std_msgs REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/UltrasoundFrame.msg"
   "msg/EddyCurrentFrame.msg"
+  "msg/PautFrame.msg"
   "msg/ProbeState.msg"
   "msg/RobotState.msg"
   "msg/FusionIndex.msg"

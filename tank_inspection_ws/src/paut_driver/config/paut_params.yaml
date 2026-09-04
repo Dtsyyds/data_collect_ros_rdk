@@ -1,0 +1,12 @@
+paut_driver_node:
+  ros__parameters:
+    port: 12345
+    sensor_id: "UNASSIGNED"
+    calibration_id: "UNASSIGNED"
+    frame_id: "paut_probe_link"
+    sample_encoding: "signed_int32_host_endian_channel_major"
+    # UDP 帧仅带 height/width, 无采样时钟/增益/声速。确认硬件配置后再填。
+    # 采样率 <=0 表示未知(填 0); 增益/声速 <0 表示未知(填 NaN)。
+    sampling_rate_hz: 0.0
+    gain_db: -1.0
+    sound_velocity_m_s: -1.0

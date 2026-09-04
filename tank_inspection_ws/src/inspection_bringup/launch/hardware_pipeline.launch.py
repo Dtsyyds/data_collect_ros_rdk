@@ -185,6 +185,7 @@ def generate_launch_description():
 
     start_d405 = LaunchConfiguration("start_d405")
     start_eddy = LaunchConfiguration("start_eddy")
+    start_paut = LaunchConfiguration("start_paut")
     start_sync = LaunchConfiguration("start_sync")
     record = LaunchConfiguration("record")
 
@@ -241,6 +242,18 @@ def generate_launch_description():
         DeclareLaunchArgument("eddy_sampling_rate_hz", default_value="0.0"),
         DeclareLaunchArgument("eddy_gain_db", default_value="-1.0"),
         DeclareLaunchArgument("eddy_lift_off_mm", default_value="-1.0"),
+        DeclareLaunchArgument(
+            "start_paut", default_value="false",
+            description="Start the local PAUT UDP receive driver (phased-array ultrasound)."),
+        DeclareLaunchArgument("paut_port", default_value="12345"),
+        DeclareLaunchArgument("paut_sensor_id", default_value="UNASSIGNED"),
+        DeclareLaunchArgument("paut_calibration_id", default_value="UNASSIGNED"),
+        DeclareLaunchArgument("paut_frame_id", default_value="paut_probe_link"),
+        DeclareLaunchArgument("paut_sample_encoding",
+            default_value="signed_int32_host_endian_channel_major"),
+        DeclareLaunchArgument("paut_sampling_rate_hz", default_value="0.0"),
+        DeclareLaunchArgument("paut_gain_db", default_value="-1.0"),
+        DeclareLaunchArgument("paut_sound_velocity_m_s", default_value="-1.0"),
         DeclareLaunchArgument("start_sync", default_value="false"),
         DeclareLaunchArgument(
             "anchor_decimation", default_value="1",
@@ -281,6 +294,8 @@ def generate_launch_description():
             "ultrasound_topic", default_value="/inspection/ultrasound/raw"),
         DeclareLaunchArgument(
             "eddy_current_topic", default_value="/inspection/eddy_current/raw"),
+        DeclareLaunchArgument(
+            "paut_topic", default_value="/inspection/paut/raw"),
         DeclareLaunchArgument(
             "probe_state_topic", default_value="/inspection/probe_state"),
         LogInfo(msg=[
@@ -354,6 +369,27 @@ def generate_launch_description():
             }],
             remappings=[
                 ("/inspection/eddy_current/raw", LaunchConfiguration("eddy_current_topic")),
+            ],
+        ),
+        Node(
+            package="paut_driver",
+            executable="paut_driver_node",
+            name="paut_driver_node",
+            output="screen",
+            emulate_tty=True,
+            condition=IfCondition(start_paut),
+            parameters=[{
+                "port": LaunchConfiguration("paut_port"),
+                "sensor_id": LaunchConfiguration("paut_sensor_id"),
+                "calibration_id": LaunchConfiguration("paut_calibration_id"),
+                "frame_id": LaunchConfiguration("paut_frame_id"),
+                "sample_encoding": LaunchConfiguration("paut_sample_encoding"),
+                "sampling_rate_hz": LaunchConfiguration("paut_sampling_rate_hz"),
+                "gain_db": LaunchConfiguration("paut_gain_db"),
+                "sound_velocity_m_s": LaunchConfiguration("paut_sound_velocity_m_s"),
+            }],
+            remappings=[
+                ("/inspection/paut/raw", LaunchConfiguration("paut_topic")),
             ],
         ),
         Node(
