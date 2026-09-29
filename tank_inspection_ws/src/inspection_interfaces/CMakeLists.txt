@@ -11,6 +11,8 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/UltrasoundFrame.msg"
   "msg/EddyCurrentFrame.msg"
   "msg/PautFrame.msg"
+  "msg/PautFrameV2.msg"
+  "msg/PautConfig.msg"
   "msg/ProbeState.msg"
   "msg/RobotState.msg"
   "msg/FusionIndex.msg"

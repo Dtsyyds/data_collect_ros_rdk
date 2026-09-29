@@ -245,15 +245,13 @@ def generate_launch_description():
         DeclareLaunchArgument(
             "start_paut", default_value="false",
             description="Start the local PAUT UDP receive driver (phased-array ultrasound)."),
-        DeclareLaunchArgument("paut_port", default_value="12345"),
+        # 设备端 v1 通道。老的 :12345(v0 裁剪图像) 已不再采集。
+        DeclareLaunchArgument("paut_port", default_value="12346"),
         DeclareLaunchArgument("paut_sensor_id", default_value="UNASSIGNED"),
         DeclareLaunchArgument("paut_calibration_id", default_value="UNASSIGNED"),
         DeclareLaunchArgument("paut_frame_id", default_value="paut_probe_link"),
-        DeclareLaunchArgument("paut_sample_encoding",
-            default_value="signed_int32_host_endian_channel_major"),
-        DeclareLaunchArgument("paut_sampling_rate_hz", default_value="0.0"),
-        DeclareLaunchArgument("paut_gain_db", default_value="-1.0"),
-        DeclareLaunchArgument("paut_sound_velocity_m_s", default_value="-1.0"),
+        # 注: v0 的 paut_sample_encoding / paut_sampling_rate_hz / paut_gain_db /
+        #     paut_sound_velocity_m_s 已移除 -- 这些量现在由设备的 CONFIG 包上报。
         DeclareLaunchArgument("start_sync", default_value="false"),
         DeclareLaunchArgument(
             "anchor_decimation", default_value="1",
@@ -295,7 +293,7 @@ def generate_launch_description():
         DeclareLaunchArgument(
             "eddy_current_topic", default_value="/inspection/eddy_current/raw"),
         DeclareLaunchArgument(
-            "paut_topic", default_value="/inspection/paut/raw"),
+            "paut_topic", default_value="/inspection/paut/raw_v2"),
         DeclareLaunchArgument(
             "probe_state_topic", default_value="/inspection/probe_state"),
         LogInfo(msg=[
@@ -383,13 +381,9 @@ def generate_launch_description():
                 "sensor_id": LaunchConfiguration("paut_sensor_id"),
                 "calibration_id": LaunchConfiguration("paut_calibration_id"),
                 "frame_id": LaunchConfiguration("paut_frame_id"),
-                "sample_encoding": LaunchConfiguration("paut_sample_encoding"),
-                "sampling_rate_hz": LaunchConfiguration("paut_sampling_rate_hz"),
-                "gain_db": LaunchConfiguration("paut_gain_db"),
-                "sound_velocity_m_s": LaunchConfiguration("paut_sound_velocity_m_s"),
             }],
             remappings=[
-                ("/inspection/paut/raw", LaunchConfiguration("paut_topic")),
+                ("/inspection/paut/raw_v2", LaunchConfiguration("paut_topic")),
             ],
         ),
         Node(

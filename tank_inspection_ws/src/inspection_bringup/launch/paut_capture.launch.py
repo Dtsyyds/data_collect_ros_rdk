@@ -58,17 +58,16 @@ def generate_launch_description():
         DeclareLaunchArgument("output_directory", default_value=str(output)),
         DeclareLaunchArgument("debug_mode", default_value="false"),
         DeclareLaunchArgument("record", default_value="true"),
-        DeclareLaunchArgument("port", default_value="12345"),
+        # 设备端 v1 通道。老的 :12345(v0 裁剪图像) 已不再采集。
+        DeclareLaunchArgument("port", default_value="12346"),
         DeclareLaunchArgument("sensor_id", default_value="UNASSIGNED"),
         DeclareLaunchArgument("calibration_id", default_value="UNASSIGNED"),
         DeclareLaunchArgument("frame_id", default_value="paut_probe_link"),
-        DeclareLaunchArgument("sample_encoding",
-            default_value="signed_int32_host_endian_channel_major"),
-        DeclareLaunchArgument("sampling_rate_hz", default_value="0.0"),
-        DeclareLaunchArgument("gain_db", default_value="-1.0"),
-        DeclareLaunchArgument("sound_velocity_m_s", default_value="-1.0"),
+        # 注: v0 的 sample_encoding / sampling_rate_hz / gain_db / sound_velocity_m_s
+        #     已移除 -- 这些量现在由设备的 CONFIG 包上报（/inspection/paut/config）。
         LogInfo(msg=[
-            "PAUT capture: UDP -> /inspection/paut/raw -> split MCAP; output=",
+            "PAUT capture: UDP :12346 -> /inspection/paut/raw_v2 + /inspection/paut/config"
+            " -> split MCAP; output=",
             LaunchConfiguration("output_directory"),
         ]),
         Node(
@@ -81,10 +80,6 @@ def generate_launch_description():
                 "sensor_id": LaunchConfiguration("sensor_id"),
                 "calibration_id": LaunchConfiguration("calibration_id"),
                 "frame_id": LaunchConfiguration("frame_id"),
-                "sample_encoding": LaunchConfiguration("sample_encoding"),
-                "sampling_rate_hz": LaunchConfiguration("sampling_rate_hz"),
-                "gain_db": LaunchConfiguration("gain_db"),
-                "sound_velocity_m_s": LaunchConfiguration("sound_velocity_m_s"),
             }],
         ),
         IncludeLaunchDescription(

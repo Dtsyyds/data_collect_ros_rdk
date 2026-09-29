@@ -1,12 +1,19 @@
 paut_driver_node:
   ros__parameters:
-    port: 12345
+    # UDP 监听端口。设备端 v1 通道（完整 61x896 原始数据 + CONFIG/HEARTBEAT 三类包）。
+    # 老的 :12345（裁剪图像, v0 格式）已不再被本节点使用。
+    port: 12346
+
+    # 溯源标签：这两个由**采集端**填写，与设备上报的 probe_name/wedge_name 不是一回事。
+    # 未标定时保持 "UNASSIGNED"。它们会出现在 PautConfig 里。
     sensor_id: "UNASSIGNED"
     calibration_id: "UNASSIGNED"
+
+    # 数据帧的 header.frame_id（探针坐标系）。
     frame_id: "paut_probe_link"
-    sample_encoding: "signed_int32_host_endian_channel_major"
-    # UDP 帧仅带 height/width, 无采样时钟/增益/声速。确认硬件配置后再填。
-    # 采样率 <=0 表示未知(填 0); 增益/声速 <0 表示未知(填 NaN)。
-    sampling_rate_hz: 0.0
-    gain_db: -1.0
-    sound_velocity_m_s: -1.0
+
+    # 注: v0 的 sample_encoding / sampling_rate_hz / gain_db / sound_velocity_m_s
+    #     已从此文件移除。这些量现在的权威值来自设备的 CONFIG 包（PautConfig 话题），
+    #     由设备实测上报，不再需要在这里手工配置。
+    #     其中 sampling_rate_hz 由设备反推得出（sampling_rate_src=derived_unverified），
+    #     编码器单位仍是 unknown —— 详见 PautConfig.notes 字段。

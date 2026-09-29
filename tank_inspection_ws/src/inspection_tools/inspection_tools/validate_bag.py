@@ -13,7 +13,9 @@ import yaml
 from inspection_tools.validators import (
     validate_eddy_current,
     validate_image,
+    validate_paut_config,
     validate_paut_frame,
+    validate_paut_frame_v2,
     validate_pointcloud2,
     validate_ultrasound,
 )
@@ -24,7 +26,9 @@ COLOR_IMAGE_TOPIC = "/camera/camera/color/image_raw"
 LIDAR_TOPIC = "/livox/lidar"
 ULTRASOUND_TOPIC = "/inspection/ultrasound/raw"
 EDDY_CURRENT_TOPIC = "/inspection/eddy_current/raw"
-PAUT_TOPIC = "/inspection/paut/raw"
+PAUT_TOPIC = "/inspection/paut/raw"          # v0 旧话题(:12345)，已停止采集；常量保留供旧 bag 校验
+PAUT_V2_TOPIC = "/inspection/paut/raw_v2"    # v1 完整 61x896 原始数据(:12346)
+PAUT_CONFIG_TOPIC = "/inspection/paut/config"  # v1 采集配置（transient_local 闩锁）
 FUSION_TOPIC = "/derived/inspection/fusion_index"
 REQUIRED_TOPICS = {
     "/camera/camera/depth/image_rect_raw",
@@ -94,6 +98,7 @@ def _metadata(bag_dir):
 
 def validate(
     bag_dir, require_all_topics=True, require_calibrated_eddy=True,
+    require_consistent_paut=True,
     required_topics=None,
 ):
     # Imports are delayed so --help and unit tests remain usable outside a sourced ROS shell.
@@ -155,6 +160,19 @@ def validate(
         "finite_i": False,
         "finite_q": False,
     }
+    # PAUT v1 的**跨话题**状态。
+    # 为什么要跨话题：契约 C7.2 要求「帧的 config_seq 必须能在 config 话题找到」，
+    # 而 validate() 是单次流式遍历（只能看到当前这一条消息），故用集合把两侧攒起来，
+    # 遍历结束后统一判定。这与 eddy_acceptance 的「|= 累积 + 末尾判定」是同一个模式。
+    paut_v2 = {
+        "frames": 0,
+        "configs": 0,
+        "config_seqs_seen": set(),        # config 话题里出现过的 config_seq
+        "frame_config_seqs": set(),       # 帧引用过的 config_seq
+        "config_sample_point_num": {},    # config_seq -> sample_point_num
+        "frame_sample_count": {},         # config_seq -> 帧的 sample_count
+        "non_linear_frames": 0,           # 帧里 scan_mode 非线扫？(帧本身不带 mode，靠 config)
+    }
 
     while reader.has_next():
         topic, serialized, bag_stamp_ns = reader.read_next()
@@ -204,6 +222,20 @@ def validate(
             eddy_acceptance["finite_q"] |= any(math.isfinite(value) for value in message.signal_q)
         elif topic == PAUT_TOPIC:
             structural_errors = validate_paut_frame(message)
+        elif topic == PAUT_V2_TOPIC:
+            structural_errors = validate_paut_frame_v2(message)
+            paut_v2["frames"] += 1
+            seq = int(message.config_seq)
+            paut_v2["frame_config_seqs"].add(seq)
+            paut_v2["frame_sample_count"][seq] = int(message.sample_count)
+        elif topic == PAUT_CONFIG_TOPIC:
+            structural_errors = validate_paut_config(message)
+            paut_v2["configs"] += 1
+            seq = int(message.config_seq)
+            paut_v2["config_seqs_seen"].add(seq)
+            paut_v2["config_sample_point_num"][seq] = int(message.sample_point_num)
+            if int(message.scan_mode) != 0:   # SCAN_MODE_LINEAR
+                paut_v2["non_linear_frames"] += 1
         for item in structural_errors:
             errors.append(f"{topic} message {stats['message_count']}: {item}")
 
@@ -294,6 +326,45 @@ def validate(
             if not eddy_acceptance[key]:
                 acceptance_output.append(f"{acceptance_prefix}: {message}")
 
+    # ---- PAUT v1 跨话题判定（契约 C7.2）----
+    # 这里才第一次出现"需要同时看两个话题"的检查，故用遍历期攒下的集合在末尾统一判定。
+    if paut_v2["frames"] or paut_v2["configs"]:
+        paut_output = errors if require_consistent_paut else warnings
+        paut_prefix = ("paut-v1 consistency blocker" if require_consistent_paut
+                       else "provisional paut-v1 limitation")
+
+        if paut_v2["frames"] and not paut_v2["configs"]:
+            # 有数据帧却完全没有配置：探头/声速/时基全未知，数据不可解释。
+            paut_output.append(
+                f"{paut_prefix}: {paut_v2['frames']} PAUT frames but no "
+                f"{PAUT_CONFIG_TOPIC} message; frames are uninterpretable")
+        else:
+            missing = sorted(paut_v2["frame_config_seqs"] - paut_v2["config_seqs_seen"])
+            if missing:
+                # 预期竞态：设备启动初期 FRAME 可能早于首份 CONFIG
+                # （CONFIG 每 2s 重发、FRAME ~86Hz）。记为 **warning** 而非 error，
+                # 否则正常录制的 bag 会被误判为失败。
+                warnings.append(
+                    f"paut-v1: frames reference config_seq {missing} which never "
+                    f"appeared on {PAUT_CONFIG_TOPIC} (expected startup race: "
+                    f"frames arriving before the first CONFIG)")
+
+            # 896 vs 1000：帧的 sample_count 与 config 的 sample_point_num 不一致。
+            # 这是设备端的已知差异（固定按 WaveDataQty=896 截取），深度换算**只能信帧**。
+            for seq, frame_sc in sorted(paut_v2["frame_sample_count"].items()):
+                cfg_sp = paut_v2["config_sample_point_num"].get(seq)
+                if cfg_sp is not None and cfg_sp != frame_sc:
+                    warnings.append(
+                        f"paut-v1: config_seq {seq}: frame sample_count {frame_sc} != "
+                        f"config sample_point_num {cfg_sp}; depth conversion must use "
+                        f"the frame value")
+
+        if paut_v2["non_linear_frames"]:
+            # 本版驱动只放行线扫，出现即说明驱动或设备侧有变化，值得当错误看待
+            errors.append(
+                f"paut-v1: {paut_v2['non_linear_frames']} CONFIG message(s) with "
+                f"scan_mode != LINEAR; only linear scan is supported")
+
     def error_summary(values):
         absolute = sorted(abs(value) for value in values)
         percentile_index = max(0, math.ceil(0.95 * len(absolute)) - 1)
@@ -343,6 +414,22 @@ def validate(
             "last_values": diagnostic_last,
             "last_by_status": diagnostic_last_by_status,
         },
+        "paut_v2": {
+            "frame_count": paut_v2["frames"],
+            "config_count": paut_v2["configs"],
+            "config_seqs_seen": sorted(paut_v2["config_seqs_seen"]),
+            "frame_config_seqs": sorted(paut_v2["frame_config_seqs"]),
+            # 帧引用了但 config 话题从未出现过的 seq —— 预期是启动竞态
+            "frame_config_seqs_missing": sorted(
+                paut_v2["frame_config_seqs"] - paut_v2["config_seqs_seen"]),
+            "config_sample_point_num": paut_v2["config_sample_point_num"],
+            "frame_sample_count": paut_v2["frame_sample_count"],
+            "sample_count_mismatch_seqs": sorted(
+                seq for seq, frame_sc in paut_v2["frame_sample_count"].items()
+                if paut_v2["config_sample_point_num"].get(seq) is not None
+                and paut_v2["config_sample_point_num"][seq] != frame_sc),
+            "non_linear_config_count": paut_v2["non_linear_frames"],
+        },
         "errors": errors,
         "warnings": warnings,
         "valid": not errors,
@@ -372,6 +459,15 @@ def main(argv=None):
             "do not require robot, ultrasound or odometry topics"
         ),
     )
+    parser.add_argument(
+        "--allow-provisional-paut",
+        action="store_true",
+        help=(
+            "report PAUT v1 cross-topic issues (frames with no config, config_seq "
+            "pairing, sample_count vs sample_point_num) as warnings; structural "
+            "errors in PautFrameV2/PautConfig still fail validation"
+        ),
+    )
     args = parser.parse_args(argv)
     output_path = args.output or args.bag_directory / "validation_report.json"
     try:
@@ -379,6 +475,7 @@ def main(argv=None):
             args.bag_directory,
             require_all_topics=not args.allow_partial,
             require_calibrated_eddy=not args.allow_provisional_eddy,
+            require_consistent_paut=not args.allow_provisional_paut,
             required_topics=(
                 EDDY_DEMO_REQUIRED_TOPICS if args.eddy_demo_profile else None),
         )

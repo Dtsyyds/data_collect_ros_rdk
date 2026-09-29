@@ -4,7 +4,9 @@ from inspection_tools.validate_bag import _uint8_value
 from inspection_tools.validators import (
     validate_eddy_current,
     validate_image,
+    validate_paut_config,
     validate_paut_frame,
+    validate_paut_frame_v2,
     validate_pointcloud2,
     validate_ultrasound,
 )
@@ -92,3 +94,76 @@ def test_eddy_current_array_and_metadata_validation():
     errors = validate_eddy_current(invalid)
     assert any("signal_q length" in item for item in errors)
     assert any("quality_score" in item for item in errors)
+
+
+# ---------------------------------------------------------------------------
+# PAUT v1 (:12346 → PautFrameV2 + PautConfig)
+# ---------------------------------------------------------------------------
+
+
+def test_paut_config_validation():
+    valid = SimpleNamespace(
+        config_seq=4,
+        beam_count=61,
+        element_total=64,
+        element_pitch_mm=0.6,
+        sample_point_num=1000,
+        sampling_rate_hz=1.0e7,
+        sampling_rate_src=1,   # DERIVED_UNVERIFIED（设备反推值）
+        sample_dtype=0,        # u8
+        scan_mode=0,           # LINEAR
+        board_type=3,
+        enc1_unit=0,           # UNKNOWN
+        enc2_unit=0,
+    )
+    assert validate_paut_config(valid) == []
+
+    # 契约 C4: 采样率未知用 NaN 是合法的（range_ns 为 0 时反推不出）
+    unknown_rate = SimpleNamespace(**vars(valid))
+    unknown_rate.sampling_rate_hz = float("nan")
+    assert validate_paut_config(unknown_rate) == []
+
+    bad = SimpleNamespace(**vars(valid))
+    bad.beam_count = 99        # 波束数 > 阵元数，不可能
+    bad.element_pitch_mm = 0.0  # 必须为正
+    bad.scan_mode = 9          # 枚举越界
+    errors = validate_paut_config(bad)
+    assert any("beam_count" in item for item in errors)
+    assert any("element_pitch_mm" in item for item in errors)
+    assert any("scan_mode" in item for item in errors)
+
+
+def test_paut_frame_v2_validation():
+    valid = SimpleNamespace(
+        schema_version=1,
+        beam_count=61,
+        sample_count=896,
+        samples=[0] * (61 * 896),
+        timestamp_source=3,           # TS_HOST_RECEIVE
+        status_flags=1 | 128,         # HAS_DATA | SAMPLE_DTYPE_U8
+        saturated_count=0,
+    )
+    assert validate_paut_frame_v2(valid) == []
+
+    bad = SimpleNamespace(**vars(valid))
+    bad.samples = [0] * 100           # 长度与维度不符（契约 C7.1）
+    bad.timestamp_source = 9          # 枚举越界
+    bad.status_flags = 2              # 置了 SATURATED 却没置 HAS_DATA
+    errors = validate_paut_frame_v2(bad)
+    assert any("samples length" in item for item in errors)
+    assert any("timestamp_source" in item for item in errors)
+    assert any("STATUS_HAS_DATA" in item for item in errors)
+
+    # 契约 C7.3: 状态位与字段值必须一致
+    inconsistent = SimpleNamespace(**vars(valid))
+    inconsistent.status_flags = 1 | 2 | 128   # 置了 SATURATED
+    inconsistent.saturated_count = 0          # 却报 0
+    errors = validate_paut_frame_v2(inconsistent)
+    assert any("STATUS_SATURATED set but saturated_count == 0" in item for item in errors)
+
+    # 饱和样本数不可能超过总样本数
+    too_many = SimpleNamespace(**vars(valid))
+    too_many.status_flags = 1 | 2 | 128
+    too_many.saturated_count = 61 * 896 + 1
+    errors = validate_paut_frame_v2(too_many)
+    assert any("saturated_count" in item for item in errors)

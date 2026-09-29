@@ -9,7 +9,13 @@ topics:
   - /robot/odometry
   - /robot/state
   - /inspection/ultrasound/raw
-  - /inspection/paut/raw
+  # PAUT v1（:12346）：完整 61x896 原始数据 + 帧级元数据
+  - /inspection/paut/raw_v2
+  # PAUT v1 采集配置（transient_local 闩锁）。**必须**在此列出，否则录制器不订阅。
+  # ⚠ 不要在 qos_overrides.yaml 为它加 durability: volatile —— 那会让配置静默丢失。
+  - /inspection/paut/config
+  # 注: 旧的 /inspection/paut/raw（v0 裁剪图像, :12345）已不再采集。
+  #     它的消息类型 PautFrame 仍保留（bags/paut_real 等 5 个 bag 依赖其类型哈希）。
   - /inspection/eddy_current/raw
   - /inspection/probe_state
   - /tf

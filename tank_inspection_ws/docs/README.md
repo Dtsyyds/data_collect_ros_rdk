@@ -24,9 +24,16 @@
         ▼
   PAUT_ROS2_MESSAGE_SPEC_ZH.md          ← 消息层设计：落到 ROS 2 / MCAP 怎么组织
         │   （.msg 定义 + QoS + 话题布局）
+        │   ⚠ 其字段定义基于设计阶段假想的线格式，已被下方位文档 §0 修正
+        ▼
+  PAUT_12346_ROS2_MAPPING_ZH.md         ★ 实现记录：线格式 → ROS 的**真实**映射
+        │   （逐字段映射表、未知量处置、config_seq 决策、C7.2 竞态例外、实测结果）
         ▼
   PAUT_IMPLEMENTATION_PLAN_ZH.md        ← 落地：拆成任务，供后续开发
             （阶段 0–4、T1–T14、V1–V9 验收、已知陷阱）
+   ─────────────────────────────────────────────────────────────
+  PAUT_DEVICE_CHANGES_REPORT_ZH.md      ← 设备端改造的阶段汇报（已完成）
+  PAUT_DEVICE_INFO_INVENTORY_ZH.md      ← 设备端可获取信息全量清单
 ```
 
 ### 各文档用途速查
@@ -36,8 +43,11 @@
 | `INSPECTION_DATA_SPEC_ZH.md` | 各模态**哪些字段该公共、哪些该特有**？七条契约是什么？ | **所有人**（顶层） |
 | `PAUT_DATA_STORAGE_FORMATS_ZH.md` | 行业里 PAUT 数据**有哪些**规范？各存了**什么字段**？我们缺什么？ | 技术选型、方案汇报 |
 | `PAUT_DATA_FORMAT_SPEC_ZH.md` | 设备端**该发什么**？每个字段的偏移/类型/单位是什么？ | 设备端开发者 |
-| `PAUT_ROS2_MESSAGE_SPEC_ZH.md` | 采集端**该定义什么消息**？话题与 QoS 怎么配？ | 采集端（ROS）开发者 |
+| `PAUT_ROS2_MESSAGE_SPEC_ZH.md` | 采集端**该定义什么消息**？话题与 QoS 怎么配？（**字段定义已过时**） | 采集端（ROS）开发者 |
+| **`PAUT_12346_ROS2_MAPPING_ZH.md`** | **实际**映射是什么？为什么这么定？哪些量不可信？验证结果如何？ | **采集端开发者（首选）** |
 | `PAUT_IMPLEMENTATION_PLAN_ZH.md` | **先做什么后做什么**？验收怎么判？有哪些坑？ | 项目推进 / 开发者本人 |
+| `PAUT_DEVICE_CHANGES_REPORT_ZH.md` | 设备端改了什么？代码清单？ | 汇报 / 溯源 |
+| `PAUT_DEVICE_INFO_INVENTORY_ZH.md` | 设备端**能拿到哪些信息**？ | 协议设计 |
 
 ### 核心结论（四句话）
 

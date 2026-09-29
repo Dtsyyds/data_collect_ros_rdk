@@ -48,11 +48,17 @@
   depth: 100
   reliability: best_effort
   durability: volatile
-/inspection/paut/raw:
+/inspection/paut/raw_v2:
   history: keep_last
   depth: 100
   reliability: best_effort
   durability: volatile
+# /inspection/paut/config 故意**不在此处覆盖**:
+#   rosbag2 的默认订阅 QoS 已是 TRANSIENT_LOCAL（Jazzy 实测），恰是 config 话题所需；
+#   而本文件的其他条目几乎都显式写了 durability: volatile。
+#   若照抄邻条目给 config 加 volatile，配置消息会**静默丢失**（bag 里只有数据没有配置，
+#   录制器不报任何错）。详见 docs/PAUT_ROS2_MESSAGE_SPEC_ZH.md §4.1 的实测对照表。
+#   规则: 要么不写这条, 要么写就必须是 transient_local。
 /inspection/eddy_current/raw:
   history: keep_last
   depth: 50
